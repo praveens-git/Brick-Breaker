@@ -42,11 +42,12 @@ body {
 }
 
 #scoreBoard {
+  text-align: end;
   transform: none;
   top: 0;
   left: auto;
-  right: 0 !important;
   margin: 2vmin;
+  right: 0 !important;
   display: block;
   z-index: 10;
 }
@@ -76,6 +77,23 @@ body {
   background: none !important;
   box-shadow: none !important;
   border: 1px solid transparent;
+}
+
+.toShrink {
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  background: inherit;
+  transform: scale(0);
+  animation: shrink 1s linear;
+}
+
+@keyframes shrink {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
 }
 
 @media screen and (max-width: 600px) {

@@ -19,7 +19,8 @@ const gameParams = {
   info: document.querySelector("#info"),
   gameOver: document.querySelector("#gameOver"),
   scoreBoard: document.querySelector("#scoreBoard"),
-  scoreVal: document.querySelector("#ScoreVal"),
+  scoreVal: document.querySelector("#scoreVal"),
+  highScoreVal: document.querySelector("#highScoreVal"),
   score: 0,
   highScore: 0,
   bricksContainer: document.querySelector(".bricks"),
@@ -130,8 +131,8 @@ document.addEventListener("keydown", (event) => {
 
 function initialise() {
   if (gameParams.running) return;
-  // gameParams.ball.xVelocity = Number(1 + (Math.random() * 2).toFixed(2));
-  // gameParams.ball.yVelocity = -Number((3 + Math.random() / 4).toFixed(2));
+  // gameParams.ball.xVelocity = Number(2 + (Math.random()).toFixed(2));
+  // gameParams.ball.yVelocity = -Number((2 + Math.random()).toFixed(2));
   let direction = Math.random();
   gameParams.ball.xVelocity =
     direction < 0.5 ? -gameParams.ball.xVelocity : gameParams.ball.xVelocity;
@@ -209,6 +210,7 @@ function checkBrickHit() {
     if (hit) {
       brickObj.isHit = true;
       brickObj.brick.className = "brick hit";
+      brickObj.brick.children[0].className = "toShrink";
     }
   });
 }
@@ -228,7 +230,7 @@ function paddleHit() {
       gameParams.ball.Element.offsetLeft -
       gameParams.paddle.Element.offsetLeft -
       gameParams.paddle.Element.clientWidth / 2;
-    velocityAlterValue = Math.random() * 0.2;
+    velocityAlterValue = Math.random() * 0.4;
     gameParams.ball.xVelocity =
       distanceFromPaddle > 0
         ? gameParams.ball.xVelocity + velocityAlterValue
@@ -288,6 +290,8 @@ function updateBallPosition() {
   gameParams.ball.Element.style.top = gameParams.ball.position.Y + "px";
   gameParams.ball.Element.style.left = gameParams.ball.position.X + "px";
   gameParams.scoreVal.textContent = gameParams.score;
+  gameParams.highScore = Math.max(gameParams.highScore, gameParams.score);
+  gameParams.highScoreVal.textContent = gameParams.highScore;
 }
 
 function updateFrame() {
@@ -303,19 +307,20 @@ function Start() {
   initialise();
   gameParams.isGameOver = false;
   gameParams.running = true;
-  // let countDown = [3, 2, 1, "GO"];
-  // i = 0;
-  // gameParams.timer.style.display = "block";
-  // let timer = setInterval(() => {
-  //   gameParams.timer.textContent = countDown[i++];
-  // }, 1000);
-  // setTimeout(() => {
-  //   clearInterval(timer);
-  gameParams.info.style.display = "none";
-  gameParams.timer.style.display = "none";
-  gameParams.gameOver.style.display = "none";
-  Loop();
-  // }, 4200);
+  gameParams.score = 0;
+  let countDown = [3, 2, 1, "GO"];
+  i = 0;
+  gameParams.timer.style.display = "block";
+  let timer = setInterval(() => {
+    gameParams.timer.textContent = countDown[i++];
+  }, 1000);
+  setTimeout(() => {
+    clearInterval(timer);
+    gameParams.info.style.display = "none";
+    gameParams.timer.style.display = "none";
+    gameParams.gameOver.style.display = "none";
+    Loop();
+  }, 4200);
 }
 
 function Loop() {
@@ -329,7 +334,16 @@ function createTable(rows, columns) {
     gameParams.bricksContainer.clientHeight,
     gameParams.bricksContainer.clientWidth
   );
-  const colors = ["blue", "green", "orange", "cyan", "yellow"];
+  const colors = [
+    "#4196e1",
+    "#000080",
+    "#228B22",
+    "#FFA500",
+    "#FF4500",
+    "#FF0000",
+    "#00FFFF",
+    "#9370D8",
+  ];
   gameParams.bricksContainer.innerHTML = "";
   gameParams.bricksContainer.setAttribute("cellSpacing", 0);
   for (let r = 0; r < rows; r++) {
@@ -356,7 +370,16 @@ function createTable(rows, columns) {
       Score =
         Score == Infinity ? Math.ceil(Math.max(rows / 2, columns / 2)) : Score;
       column.id = Score;
-      column.style.background = colors[Score % colors.length];
+      column.style.background = `${colors[Score % colors.length]}B0`;
+      column.style.boxShadow = `inset 0 0 10px 10px ${
+        colors[Score % colors.length]
+      }A0`;
+      let div = document.createElement("div");
+      div.style.background = `${colors[Score % colors.length]}B0`;
+      div.style.boxShadow = `inset 0 0 10px 10px ${
+        colors[Score % colors.length]
+      }A0`;
+      column.appendChild(div);
       row.appendChild(column);
     }
     gameParams.bricksContainer.appendChild(row);
