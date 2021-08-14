@@ -1,0 +1,85 @@
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.paddle {
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 0.5vmin;
+  background-color: white;
+  border-radius: 1vmin;
+  width: 8vw;
+  min-height: 12px;
+  height: 2vmin;
+}
+
+.ball {
+  display: none;
+  background-color: white;
+  border-radius: 50%;
+  position: fixed;
+  min-width: 10px;
+  min-height: 10px;
+  width: 1.75vmin;
+  height: 1.75vmin;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.overlay {
+  display: none;
+  text-align: center;
+  background: black;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 5;
+}
+
+#scoreBoard {
+  transform: none;
+  top: 0;
+  left: auto;
+  right: 0 !important;
+  margin: 2vmin;
+  display: block;
+  z-index: 10;
+}
+
+.bricks {
+  position: relative;
+  margin: 10vh auto;
+  width: 80vw;
+  height: 50vh;
+  /* border: 1px solid white; */
+}
+
+#timer {
+  top: 75vh;
+  font-size: 15vmin;
+}
+
+.brick {
+  /* background: linear-gradient(45deg, green, black, blue); */
+  /* box-shadow: inset 0 0 10px 10px #00820090;
+  background: #00ff00; */
+  margin: 0;
+  border: 1px solid white;
+}
+
+.hit {
+  background: none !important;
+  box-shadow: none !important;
+  border: 1px solid transparent;
+}
+
+@media screen and (max-width: 600px) {
+  .paddle {
+    width: 20vw;
+  }
+}
