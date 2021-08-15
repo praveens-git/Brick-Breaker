@@ -27,68 +27,44 @@ const gameParams = {
   bricksArray: [],
   timer: document.querySelector("#timer"),
   streak: 0,
+  isMobile: false,
+  debugger: false,
+  totalBrick: 0,
 };
+
+let temp = 0;
 
 gameParams.paddle.Element.style.left =
   window.innerWidth > 600 ? "45vw" : "40vw";
 
 let xDown, yDown;
 
-document.addEventListener("touchstart", (evt) => {
-  const firstTouch = (evt.touches || evt.originalEvent.touches)[0];
-  xDown = firstTouch.clientX;
-  yDown = firstTouch.clientY;
-});
+if (
+  /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  )
+) {
+  gameParams.isMobile = true;
+  document.addEventListener("touchmove", (event) => {
+    let pointerLoc =
+      (Math.floor(event.changedTouches[0].clientX) % window.innerWidth) -
+      gameParams.paddle.Element.clientWidth / 2;
 
-document.addEventListener("click", (event) => {
-  Start();
-});
-document.addEventListener("touchmove", (event) => {
-  if (!xDown || !yDown) {
-    return;
-  }
-
-  var xUp = event.touches[0].clientX;
-  var yUp = event.touches[0].clientY;
-
-  var xDiff = xDown - xUp;
-  var yDiff = yDown - yUp;
-
-  if (Math.abs(xDiff) > Math.abs(yDiff)) {
-    if (xDiff > 0) {
-      /* right swipe */
-      if (Number(gameParams.paddle.Element.offsetLeft) <= 0) {
-        gameParams.paddle.Element.style.left = "0vw";
-        return;
-      }
-      gameParams.paddle.Element.style.left =
-        Number(gameParams.paddle.Element.style.left.replace("vw", "")) -
-        Math.round(xDiff / 2) * 2 +
-        "vw";
-    } else {
-      /* left swipe */
-      if (
-        Number(gameParams.paddle.Element.offsetLeft) +
-          Number(gameParams.paddle.Element.clientWidth) >=
-        window.innerWidth
-      ) {
-        gameParams.paddle.Element.style.left =
-          (
-            (1 - gameParams.paddle.Element.clientWidth / window.innerWidth) *
-            100
-          ).toFixed(2) + "vw";
-        return;
-      }
-      gameParams.paddle.Element.style.left =
-        Number(gameParams.paddle.Element.style.left.replace("vw", "")) +
-        Math.abs(Math.round(xDiff / 2) * 2) +
-        "vw";
+    if (pointerLoc <= 0) {
+      gameParams.paddle.Element.style.left = "1px";
+      return;
     }
-  }
-  /* reset values */
-  xDown = null;
-  yDown = null;
-});
+    if (
+      pointerLoc + gameParams.paddle.Element.clientWidth >=
+      window.innerWidth
+    ) {
+      gameParams.paddle.Element.style.left =
+        window.innerWidth - gameParams.paddle.Element.clientWidth + "px";
+      return;
+    }
+    gameParams.paddle.Element.style.left = pointerLoc + "px";
+  });
+}
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "Space") {
@@ -97,6 +73,13 @@ document.addEventListener("keydown", (event) => {
   if (event.code == "KeyR") {
     gameParams.running = false;
     Start();
+  }
+  if (event.code == "KeyD") {
+    gameParams.debugger = true;
+    temp++;
+    if (temp > 2) {
+      debug();
+    }
   }
   if (event.code == "ArrowLeft") {
     if (Number(gameParams.paddle.Element.offsetLeft) <= 0) {
@@ -129,10 +112,14 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+document.addEventListener("click", (event) => {
+  Start();
+});
+
 function initialise() {
   if (gameParams.running) return;
-  // gameParams.ball.xVelocity = Number(2 + (Math.random()).toFixed(2));
-  // gameParams.ball.yVelocity = -Number((2 + Math.random()).toFixed(2));
+  gameParams.ball.xVelocity = Number((0.5 + Math.random() * 1.5).toFixed(2));
+  gameParams.ball.yVelocity = -Number((2 + Math.random()).toFixed(2));
   let direction = Math.random();
   gameParams.ball.xVelocity =
     direction < 0.5 ? -gameParams.ball.xVelocity : gameParams.ball.xVelocity;
@@ -142,7 +129,8 @@ function initialise() {
   gameParams.paddle.Element.style.left =
     window.innerWidth > 600 ? "45vw" : "40vw";
 
-  gameParams.ball.position.Y = Math.floor(window.innerHeight * 0.96);
+  let vmin = Math.min(window.innerHeight, window.innerWidth);
+  gameParams.ball.position.Y = window.innerHeight - Math.floor(vmin * 0.07);
   gameParams.ball.position.X = Math.floor(window.innerWidth / 2);
   gameParams.ball.Element.style.top = gameParams.ball.position.Y + "px";
   gameParams.ball.Element.style.left = gameParams.ball.position.X + "px";
@@ -155,6 +143,7 @@ function checkGameOver() {
   ) {
     gameParams.isGameOver = true;
     gameParams.running = false;
+    gameParams.gameOver.innerHTML = "<h1>Game Over</h1>";
     gameParams.gameOver.style.display = "block";
     gameParams.highScore = Math.max(gameParams.highScore, gameParams.score);
     return true;
@@ -205,7 +194,13 @@ function checkBrickHit() {
         gameParams.score += gameParams.streak * Number(brickObj.brick.id);
 
         hit = true;
+        gameParams.totalBrick--;
       }
+    }
+    if (gameParams.totalBrick == 0) {
+      gameParams.gameOver.style.display = "block";
+      gameParams.gameOver.innerHTML = "<h1>You Won</h1>";
+      gameParams.running = false;
     }
     if (hit) {
       brickObj.isHit = true;
@@ -289,9 +284,19 @@ function updateBallPosition() {
 
   gameParams.ball.Element.style.top = gameParams.ball.position.Y + "px";
   gameParams.ball.Element.style.left = gameParams.ball.position.X + "px";
+
   gameParams.scoreVal.textContent = gameParams.score;
   gameParams.highScore = Math.max(gameParams.highScore, gameParams.score);
   gameParams.highScoreVal.textContent = gameParams.highScore;
+
+  document.querySelector("#xVel").textContent =
+    gameParams.ball.xVelocity.toFixed(2);
+  document.querySelector("#yVel").textContent =
+    gameParams.ball.yVelocity.toFixed(2);
+}
+
+function debug() {
+  document.querySelector("#debug").style.display = "block";
 }
 
 function updateFrame() {
@@ -325,6 +330,7 @@ function Start() {
 
 function Loop() {
   if (gameParams.isGameOver) return;
+  if (!gameParams.running) return;
   updateFrame();
   requestAnimationFrame(Loop);
 }
@@ -384,6 +390,7 @@ function createTable(rows, columns) {
     }
     gameParams.bricksContainer.appendChild(row);
   }
+  gameParams.totalBrick = gameParams.bricksArray.length;
 }
 
 function calculateSizing() {

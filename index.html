@@ -14,12 +14,14 @@
         <p>Use Arrow Keys to Move the paddle</p>
         <p>Press &langle; Space &rangle; to Start Playing...</p>
       </div>
-      <div class="overlay" id="gameOver">
-        <h1>Game Over</h1>
-      </div>
+      <div class="overlay" id="gameOver"></div>
       <div class="overlay" id="scoreBoard">
         <p style="margin: 0">High Score:<span id="highScoreVal">0</span></p>
         <p style="margin: 0">Score:<span id="scoreVal">0</span></p>
+      </div>
+      <div class="overlay" id="debug" style="display: none; right: auto">
+        <p style="margin: 0">xVel:<span id="xVel">0</span></p>
+        <p style="margin: 0">yVel:<span id="yVel">0</span></p>
       </div>
       <div class="overlay" id="timer"></div>
       <table class="bricks"></table>
