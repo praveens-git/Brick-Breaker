@@ -89,6 +89,26 @@ body {
   animation: shrink 1s linear;
 }
 
+.powerup {
+  position: absolute;
+  z-index: 20;
+}
+
+.powerup img {
+  width: 5vw;
+  filter: invert(1);
+}
+
+.shield {
+  background: lightblue;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  bottom: 0;
+  height: 0.5vmin;
+  width: -webkit-fill-available;
+}
+
 @keyframes shrink {
   from {
     transform: scale(1);
