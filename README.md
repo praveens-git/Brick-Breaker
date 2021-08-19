@@ -36,24 +36,6 @@ Please create an issue if you come across a bug.
     Shooter Image by <a href="https://pixabay.com/users/wmu-13212423/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6403637">WMU</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6403637">Pixabay</a>
     Turtle Image by <a href="https://pixabay.com/users/clker-free-vector-images-3736/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=305215">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=305215">Pixabay</a>
 
-<h3>Versions</h3>
-    <ul>
-    <li>
-        <ul>
-        Version 1:
-            <li>Simple Game with Logic</li>
-            <li>With Mobile Support</li>
-            <li>No Power Ups</li>
-        </ul>
-    </li>
-    <li>
-        <ul>
-        Version 2:
-            <li>Added Power Ups</li>
-        </ul>
-    </li>
-    </ul>
-
 <h3>License</h3>
 
 <a href="https://choosealicense.com/licenses/mit/">MIT</a>
