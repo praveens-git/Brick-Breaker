@@ -4,11 +4,41 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
     <title>Brick Breaker</title>
   </head>
   <body>
-    <script>
-      window.location.href = "/v2/";
-    </script>
+    <main id="app">
+      <div class="overlay" id="info" style="display: block">
+        <h1>Brick Breaker</h1>
+        <p>Use Arrow Keys to Move the paddle</p>
+        <p>Press &langle; Space &rangle; to Start Playing...</p>
+        <br />
+        <p>
+          Source code & Attributions can be found on
+          <a href="https://github.com/praveens-git/Brick-Breaker">github</a>.
+        </p>
+        <br />
+        <p>
+          Images are sourced from <a href="https://pixabay.com"> pixabay.com</a>
+        </p>
+      </div>
+      <div class="overlay" id="gameOver"></div>
+      <div class="overlay" id="scoreBoard">
+        <p style="margin: 0">High Score:<span id="highScoreVal">0</span></p>
+        <p style="margin: 0">Score:<span id="scoreVal">0</span></p>
+      </div>
+      <div class="overlay" id="debug" style="display: none; right: auto">
+        <p style="margin: 0">xVel:<span id="xVel">0</span></p>
+        <p style="margin: 0">yVel:<span id="yVel">0</span></p>
+      </div>
+      <div class="overlay" id="timer"></div>
+      <table class="bricks"></table>
+      <div class="ball"></div>
+      <div class="paddle"></div>
+      <div class="shield" style="display: none"></div>
+      <div id="powerUps"></div>
+    </main>
+    <script src="script.js"></script>
   </body>
 </html>
