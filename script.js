@@ -469,7 +469,6 @@ function setPowerUps() {
       // ? Improve: Add Magnet Power Call and Shooting Power Call
 
       element["power"] = power;
-      element.brick.style.background = "white";
     } else {
       i--;
     }
