@@ -122,4 +122,7 @@ body {
   .paddle {
     width: 20vw;
   }
+  .powerup img {
+    width: 15vw;
+  }
 }

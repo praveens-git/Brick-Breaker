@@ -494,9 +494,11 @@ Drops:
 
 function reset() {
   gameParams.bricksArray = [];
+  gameParams.powerUps.currentPowerups = [];
   gameParams.isGameOver = false;
   gameParams.running = true;
   gameParams.score = 0;
+  document.querySelector("#powerUps").innerHTML = "";
 }
 
 function ShrinkPaddle() {
@@ -574,7 +576,6 @@ function updateDrop() {
         Number(powerup.powerBox.style.top.replace("px", "")) +
         powerup.yVelocity +
         "px";
-      console.log("Catched");
     }
     checkDropCatch(powerup);
     if (
