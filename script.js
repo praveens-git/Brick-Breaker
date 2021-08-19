@@ -35,31 +35,31 @@ const gameParams = {
     powerCount: 10,
     powers: [
       {
-        imgSrc: "/resources/arrow.png",
+        imgSrc: "resources/arrow.png",
         style: "",
       },
       {
-        imgSrc: "/resources/comet.png",
+        imgSrc: "resources/comet.png",
         style: "transform:rotate(45deg);",
       },
       {
-        imgSrc: "/resources/magnet.png",
+        imgSrc: "resources/magnet.png",
         style: "transform:rotate(180deg);filter:invert(0);",
       },
       {
-        imgSrc: "/resources/rabbit.png",
+        imgSrc: "resources/rabbit.png",
         style: "transform:rotateY(180deg);",
       },
       {
-        imgSrc: "/resources/shield.png",
+        imgSrc: "resources/shield.png",
         style: "filter:invert(0);",
       },
       {
-        imgSrc: "/resources/turtle.png",
+        imgSrc: "resources/turtle.png",
         style: "transform:rotate(-45deg);",
       },
       {
-        imgSrc: "/resources/shooter.png",
+        imgSrc: "resources/shooter.png",
         style: "transform:rotate(90deg);",
       },
     ],
